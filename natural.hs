@@ -1,5 +1,8 @@
 module Natural where
 
+fstAdd :: Integral a => (a, t) -> a -> (a, t)
+fstAdd (a, b) x = (a + x, b)
+
 data Natural = Zero | Succ Natural
     deriving (Eq, Ord)
 
@@ -41,6 +44,12 @@ instance Real Natural where
 instance Integral Natural where
     toInteger Zero = 0
     toInteger (Succ x) = toInteger x + 1
+
+    quotRem x Zero = undefined
+    quotRem Zero x = (Zero, Zero)
+    quotRem x (Succ Zero) = (x, Zero)
+    quotRem (Succ Zero) x = (Zero, Succ Zero)
+    quotRem x y = if x >= y then fstAdd (quotRem (x - y) y) 1 else (Zero, x)
 
 instance Show Natural where
     --showsPrec p n = [(fromEnum i, s') | (i, s') <- showsPrec p s]
