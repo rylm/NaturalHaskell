@@ -1,4 +1,4 @@
-module Natural where
+--import GHC.Read (readPrec)
 
 data Natural = Zero | Succ Natural
     deriving (Eq, Ord)
